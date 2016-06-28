@@ -13,6 +13,8 @@ public class ClientSampleNetwork<TDef> : Component<TDef> where TDef : DefSampleN
 
         EntityMgr.getDefaultEventPublisher().addHandler(Entity);
 
+        DefaultRpcSession.defRpcMethod<int, string>(1, _onRpcMethod1);
+
         connectBase("192.168.0.10", 5882);
     }
 
@@ -58,25 +60,24 @@ public class ClientSampleNetwork<TDef> : Component<TDef> where TDef : DefSampleN
     {
         EbLog.Note("ClientSampleNetwork._onSocketConnected()");
 
-        //rpc(MethodType.c2sAccountRequest, account_request);
-
-        DefaultRpcSession.rpc(999);
-
-        //byte[] data = Encoding.UTF8.GetBytes("Hello world");
-        //if (session != null) session.send(method_id, data);
+        DefaultRpcSession.rpc(2, 2, "Hello World!");
     }
 
     //-------------------------------------------------------------------------
     void _onSocketClosed(object client, EventArgs args)
     {
         EbLog.Note("ClientSampleNetwork._onSocketClosed()");
-
     }
 
     //-------------------------------------------------------------------------
     void _onSocketError(object rec, SocketErrorEventArgs args)
     {
         EbLog.Note("ClientSampleNetwork._onSocketError()");
+    }
 
+    void _onRpcMethod1(int v, string info)
+    {
+        EbLog.Note(v.ToString());
+        EbLog.Note(info);
     }
 }

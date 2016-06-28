@@ -56,6 +56,7 @@ public class RpcSessionSuperSocket : RpcSession
     //---------------------------------------------------------------------
     void _onSocketReceive(byte[] data, int len)
     {
+        bool is_little_endian = BitConverter.IsLittleEndian;
         ushort method_id = BitConverter.ToUInt16(data, 0);
 
         byte[] buf = null;
